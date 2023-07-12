@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.security.Timestamp;
 import java.util.List;
 
 @Entity(name = "app_users")
@@ -26,6 +27,7 @@ public class AppUser {
 
     private String password;
 
+    private Timestamp created_on;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_role",
@@ -33,4 +35,5 @@ public class AppUser {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> role;
+
 }
