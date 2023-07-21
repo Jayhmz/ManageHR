@@ -24,5 +24,5 @@ public class AppUserDTO {
     @Size(min = 8, message = "Enter at least 8 characters")
     private String confirmPassword;
     @NotNull(message = "Select your role")
-    private List<RoleDTO> roleDTO;
+    private List<Integer> userRolesId;
 }

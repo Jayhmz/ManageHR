@@ -13,21 +13,9 @@ import java.util.List;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     private String title;
-    public Role(Long id){
-        this.id = id;
-    }
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private List<AppUser> employee;
-
     @ManyToMany
     @JoinTable(
             name = "roles_permissions",
@@ -35,4 +23,19 @@ public class Role {
             inverseJoinColumns = @JoinColumn(name = "permission_id")
     )
     private List<Permission> permission;
+    @ManyToMany
+    @JoinTable(
+            name = "roles_permissions",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<AppUser> appUsers;
+
+    public Role(int id){
+        this.id = id;
+    }
+    public Role(int id,String title){
+        this.title = title;
+        this.id = id;
+    }
 }

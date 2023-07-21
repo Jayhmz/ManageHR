@@ -10,7 +10,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     public static final String[] WHITELIST = {
-            "/test", "/test2"
+            "/", "/home", "/register"
     };
 
     @Bean
