@@ -1,10 +1,11 @@
 package com.plantacion.employeemanagementapp.model.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Data;
 
+@Entity
+@Table(name = "permissions")
+@Data
 public class Permission {
 
     @Id
