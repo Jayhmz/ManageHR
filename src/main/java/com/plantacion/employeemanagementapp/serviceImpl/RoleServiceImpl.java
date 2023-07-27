@@ -30,10 +30,4 @@ public class RoleServiceImpl implements RoleService {
         return repository.findAllById(ids);
     }
 
-    public void addRole(RoleDTO roleDTO){
-        Role role = new Role();
-        role.setTitle(roleDTO.getTitle());
-        repository.save(role);
-    }
-
 }

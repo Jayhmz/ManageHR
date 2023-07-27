@@ -104,13 +104,10 @@ class AppUserServiceImplTest {
         // Mock appUserRepository.save() method to return the roles
         when(appUserRepository.save(ArgumentMatchers.any(AppUser.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
-
         // Mock appUserService.createUser() method to return null
         when(appUserService.createUser(userDTO)).thenReturn(null);
-
         // Call the method being tested
         AppUser createdUser = appUserService.createUser(userDTO);
-
         // Assert the result
         assertNull(createdUser, "Created user should be null");
     }

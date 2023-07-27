@@ -9,6 +9,12 @@ import com.plantacion.employeemanagementapp.service.AppUserService;
 import com.plantacion.employeemanagementapp.service.RoleService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AppUserServiceImpl implements AppUserService {
+public class AppUserServiceImpl implements AppUserService, UserDetailsService {
 
     @Autowired
     private AppUserRepository repository;
@@ -39,4 +45,16 @@ public class AppUserServiceImpl implements AppUserService {
         return repository.save(appUser);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        AppUser appUser = repository.findByEmail(username);
+        if (appUser.getEmail() == null){
+            throw new UsernameNotFoundException("Incorrect login details");
+        }
+        List<GrantedAuthority> roles = new ArrayList<>();
+        for(Role role : appUser.getRole()){
+            roles.add(new SimpleGrantedAuthority(role.getTitle()));
+        }
+        return new User(appUser.getEmail(), appUser.getPassword(), roles);
+    }
 }
