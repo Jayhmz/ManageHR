@@ -9,6 +9,9 @@ import com.plantacion.employeemanagementapp.service.AppUserService;
 import com.plantacion.employeemanagementapp.service.RoleService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -43,6 +46,12 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
                 .role(roleService.findAllByIds(user.getUserRolesId()))
                 .build();
         return repository.save(appUser);
+    }
+
+    @Override
+    public Page<AppUser> getPagenatedUsers(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        return repository.findAll(pageable);
     }
 
     @Override
