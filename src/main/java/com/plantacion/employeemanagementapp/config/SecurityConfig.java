@@ -25,6 +25,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> {
                     request.requestMatchers( WHITELIST).permitAll();
                     request.anyRequest().authenticated();
+                    
                 })
                 .userDetailsService(service)
                 .formLogin(form ->
